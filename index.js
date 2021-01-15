@@ -142,6 +142,7 @@ class AutocompletePrompt extends Base {
         }
       };
 
+      this.validating = true;
       if (this.opt.validateText) {
         this.render(this.opt.validateText, 'loading');
       }
@@ -154,6 +155,7 @@ class AutocompletePrompt extends Base {
         validationResult = await this.opt.validate(choice, this.answers);
       }
 
+      this.validating = false;
       checkValidationResult(validationResult);
 
     } else {
@@ -261,18 +263,14 @@ class AutocompletePrompt extends Base {
    */
 
   onKeypress(e /* : {key: { name: string, ctrl: boolean }, value: string } */) {
+    if (this.validating) {
+      return;
+    }
+
     var len;
     var keyName = (e.key && e.key.name) || undefined;
 
-    if (keyName === 'tab' && this.opt.suggestOnly) {
-      if (this.currentChoices.getChoice(this.selected)) {
-        this.rl.write(ansiEscapes.cursorLeft);
-        var autoCompleted = this.currentChoices.getChoice(this.selected).value;
-        this.rl.write(ansiEscapes.cursorForward(autoCompleted.length));
-        this.rl.line = autoCompleted;
-        this.render();
-      }
-    } else if (keyName === 'down' || (keyName === 'n' && e.key.ctrl)) {
+    if (keyName === 'down' || (keyName === 'n' && e.key.ctrl)) {
       len = this.nbChoices;
       this.selected = this.selected < len - 1 ? this.selected + 1 : 0;
       this.ensureSelectedInRange();
