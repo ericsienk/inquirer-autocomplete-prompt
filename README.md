@@ -47,6 +47,9 @@ See [inquirer](https://github.com/SBoudrias/Inquirer.js) readme for meaning of a
 
 **emptyText** Is the text shown if the search returns no results. Defaults: `No results...`
 
+**loadingValidationText** Is the text shown when async validation is loading.
+
+**hintText** Is the text shown over the input field before typing. Defaults: `(Use arrow keys or type to search)`
 
 #### Example
 
@@ -65,16 +68,13 @@ inquirer.prompt([{
 
 ```
 
-See also [example.js](https://github.com/mokkabonna/inquirer-autocomplete-prompt/blob/master/example.js) for a working example.
+See also [example.js](https://github.com/ericsienk/inquirer-autocomplete-prompt/blob/master/example.js) for a working example.
 
 I recommend using this package with [fuzzy](https://www.npmjs.com/package/fuzzy) if you want fuzzy search. Again, see the example for a demonstration of this.
 
 ![Autocomplete prompt](./inquirer.gif)
 
-## Credits
+## Forked from 
 
 [Martin Hansen](https://github.com/mokkabonna/)
 
-## License
-
-ISC

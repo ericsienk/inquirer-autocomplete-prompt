@@ -4,7 +4,6 @@
  * `autocomplete` type prompt
  */
 
-var ansiEscapes = require('ansi-escapes');
 var chalk = require('chalk');
 var figures = require('figures');
 var Base = require('inquirer/lib/prompts/base');
@@ -143,8 +142,8 @@ class AutocompletePrompt extends Base {
       };
 
       this.validating = true;
-      if (this.opt.validateText) {
-        this.render(this.opt.validateText, 'loading');
+      if (this.opt.loadingValidationText) {
+        this.render(this.opt.loadingValidationText, 'loading');
       }
       
       let validationResult;
@@ -328,10 +327,6 @@ function listRender(choices, pointer /*: string */) /*: string */ {
   });
 
   return output.replace(/\n$/, '');
-}
-
-function isPromise(value) {
-  return typeof value === 'object' && typeof value.then === 'function';
 }
 
 module.exports = AutocompletePrompt;

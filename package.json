@@ -1,7 +1,7 @@
 {
   "name": "inquirer-autocomplete-custom-prompt",
-  "version": "1.0.0",
-  "description": "An Inquirer plugin for optional list support.",
+  "version": "1.1.0",
+  "description": "An Inquirer plugin for custom autocomplete support.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -20,7 +20,10 @@
   },
   "homepage": "https://github.com/ericsienk/inquirer-autocomplete-prompt#readme",
   "peerDependencies": {
-    "inquirer": "^7.x.x"
+    "inquirer": "7.x.x",
+    "chalk": "4.x.x",
+    "run-async": "4.x.x",
+    "rxjs": "6.x.x"
   },
   "devDependencies": {
     "@types/inquirer": "7.3.1",

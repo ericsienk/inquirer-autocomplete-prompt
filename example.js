@@ -112,7 +112,7 @@ inquirer
       source: searchFood,
       pageSize: 4,
       hintText: 'Enter a value or use list',
-      validateText: 'Hang on a second...',
+     // loadingValidationText: 'Hang on a second...',
       validate: async function (val) {
         await new Promise(resolve => setTimeout(resolve, 1000));
         return val.value === 'Apple';
