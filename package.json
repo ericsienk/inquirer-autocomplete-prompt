@@ -1,9 +1,8 @@
 {
   "name": "inquirer-autocomplete-custom-prompt",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "An Inquirer plugin for custom autocomplete support.",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "index.js",
   "scripts": {
     "build": "rimraf dist && tsc --p tsconfig.build.json",
     "test": "jest --coverage",
@@ -22,7 +21,7 @@
   "peerDependencies": {
     "inquirer": "7.x.x",
     "chalk": "4.x.x",
-    "run-async": "4.x.x",
+    "run-async": "2.x.x",
     "rxjs": "6.x.x"
   },
   "devDependencies": {
