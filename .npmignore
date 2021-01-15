@@ -6,3 +6,6 @@ coverage
 .eslintcache
 test
 .travis.yml
+.*
+example.js
+inquirer.gif
