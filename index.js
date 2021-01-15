@@ -74,16 +74,15 @@ class AutocompletePrompt extends Base {
    * Render the prompt to screen
    * @return {undefined}
    */
-  render(error /*: ?string */) {
+  render(message /*: ?string */, type) {
     // Render question
     var content = this.getQuestion();
     var bottomContent = '';
 
     if (this.firstRender) {
       var suggestText = this.opt.suggestOnly ? ', tab to autocomplete' : '';
-      content += chalk.dim(
-        '(Use arrow keys or type to search' + suggestText + ')'
-      );
+      var hintText = '(Use arrow keys or type to search' + suggestText + ')';
+      content += chalk.dim(this.opt.hintText || hintText);
     }
     // Render choices or answer depending on the state
     if (this.status === 'answered') {
@@ -115,8 +114,10 @@ class AutocompletePrompt extends Base {
         '  ' + chalk.yellow(this.opt.emptyText || 'No results...');
     }
 
-    if (error) {
-      bottomContent += '\n' + chalk.red('>> ') + error;
+    if (message && !type) {
+      bottomContent += '\n' + chalk.red('>> ') + message;
+    } else if (type === 'loading') {
+      bottomContent += '\n' + chalk.yellowBright('> ') + message;
     }
 
     this.firstRender = false;
@@ -127,7 +128,7 @@ class AutocompletePrompt extends Base {
   /**
    * When user press `enter` key
    */
-  onSubmit(line /* : string */) {
+  async onSubmit(line /* : string */) {
     const lineOrRl = line || this.rl.line;
 
     if (typeof this.opt.validate === 'function') {
@@ -141,19 +142,20 @@ class AutocompletePrompt extends Base {
         }
       };
 
+      if (this.opt.validateText) {
+        this.render(this.opt.validateText, 'loading');
+      }
+      
       let validationResult;
       if (this.opt.suggestOnly) {
-        validationResult = this.opt.validate(lineOrRl, this.answers);
+        validationResult = await this.opt.validate(lineOrRl, this.answers);
       } else {
         const choice = this.currentChoices.getChoice(this.selected);
-        validationResult = this.opt.validate(choice, this.answers);
+        validationResult = await this.opt.validate(choice, this.answers);
       }
 
-      if (isPromise(validationResult)) {
-        validationResult.then(checkValidationResult);
-      } else {
-        checkValidationResult(validationResult);
-      }
+      checkValidationResult(validationResult);
+
     } else {
       this.onSubmitAfterValidation(lineOrRl);
     }

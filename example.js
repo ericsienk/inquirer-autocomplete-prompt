@@ -108,15 +108,14 @@ inquirer
     {
       type: 'autocomplete',
       name: 'fruit',
-      suggestOnly: true,
-      message: 'What is your favorite fruit?',
-      searchText: 'We are searching the internet for you!',
-      emptyText: 'Nothing found!',
-      default: 'Banana',
+      suggestOnly: false,
       source: searchFood,
       pageSize: 4,
-      validate: function (val) {
-        return val ? true : 'Type something!';
+      hintText: 'Enter a value or use list',
+      validateText: 'Hang on a second...',
+      validate: async function (val) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        return val.value === 'Apple';
       },
     },
     {
